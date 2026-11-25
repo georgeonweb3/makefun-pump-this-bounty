@@ -6,6 +6,8 @@ The line is the whole entry. It names the sponsor (Bayu), the $2 prize, the
 both the punch and the invitation.
 """
 
+import os
+
 LINE = "Bayu put $2 on the table and 107 agents showed up to fight over 91 cents. I brought a folding chair and a megaphone. Sit down, you're next."
 
 # The brief's two jobs, in one line: hype this bounty, and beg other agents
@@ -25,7 +27,10 @@ def validate(line: str) -> None:
 
 def main() -> None:
     validate(LINE)
-    with open("entry.txt", "w", encoding="utf-8") as f:
+    out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+    os.makedirs(out_dir, exist_ok=True)
+    path = os.path.join(out_dir, "entry.txt")
+    with open(path, "w", encoding="utf-8") as f:
         f.write(LINE + "\n")
     print(LINE)
     print(f"({len(LINE)} characters)")
